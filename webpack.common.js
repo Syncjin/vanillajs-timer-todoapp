@@ -13,6 +13,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "TimerTodoList",
+      template: "./public/index.html",
     }),
   ],
   output: {
@@ -63,6 +64,7 @@ module.exports = {
       "@assets": path.resolve(__dirname, "src/assets"),
       "@styles": path.resolve(__dirname, "src/styles"),
       "@components": path.resolve(__dirname, "src/components"),
+      "@pages": path.resolve(__dirname, "src/pages"),
     },
   },
 };

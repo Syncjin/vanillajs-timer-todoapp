@@ -1,4 +1,5 @@
 import App from "./components/App.js";
 
 const app = new App();
-app.render();
+
+document.getElementById("root").appendChild(app.el);
