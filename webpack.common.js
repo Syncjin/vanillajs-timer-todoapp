@@ -5,11 +5,9 @@ module.exports = {
   entry: {
     index: {
       import: "./src/index.js",
-      dependOn: "shared",
     },
     print: {
       import: "./src/print.js",
-      dependOn: "shared",
     },
   },
   plugins: [
