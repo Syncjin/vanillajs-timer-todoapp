@@ -5,6 +5,7 @@
 export class Component {
   constructor(props = {}) {
     this.props = props;
+    this.state = this.initState?.() || {};
     this.el = this.createElement();
     this.init();
   }
@@ -13,6 +14,14 @@ export class Component {
     this.render();
     if (typeof this.componentDidMount === "function") {
       this.componentDidMount();
+    }
+  }
+
+  setState(partialState = {}) {
+    this.state = { ...this.state, ...partialState };
+    this.render();
+    if (typeof this.componentDidUpdate === "function") {
+      this.componentDidUpdate();
     }
   }
 
