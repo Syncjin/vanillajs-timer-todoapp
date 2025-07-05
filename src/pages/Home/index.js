@@ -1,6 +1,7 @@
 import { Component } from "@components/common/Component";
 import Header from "@components/layout/Header";
 import TodoInput from "@pages/Home/TodoInput";
+import TodoList from "@pages/Home/TodoList";
 
 class Home extends Component {
   createElement() {
@@ -10,11 +11,27 @@ class Home extends Component {
   }
 
   render() {
+    /** 레이아웃 생성 */
     const header = new Header({ className: "header" });
     this.el.appendChild(header.el);
 
-    const todoList = new TodoInput({ className: "todo-input" });
-    this.el.appendChild(todoList.el);
+    const contentView = document.createElement("div");
+    contentView.className = "content-view";
+
+    const leftView = document.createElement("div");
+    leftView.className = "left-view";
+
+    const rightView = document.createElement("div");
+    rightView.className = "right-view";
+
+    contentView.appendChild(leftView);
+    contentView.appendChild(rightView);
+
+    const todoInput = new TodoInput({ className: "todo-input" });
+    const todoList = new TodoList({ className: "todo-list" });
+    this.el.appendChild(contentView);
+    leftView.appendChild(todoInput.el);
+    leftView.appendChild(todoList.el);
   }
 }
 
