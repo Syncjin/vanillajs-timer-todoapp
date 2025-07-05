@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'MyFont';
+  src: url('@assets/fonts/Pretendard-Medium.woff2') format('woff2'),
+    url('@assets/fonts/Pretendard-Medium.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+.hello {
+  color: red;
+  font-family: 'MyFont';
+  background: url('@assets/images/millie.png');
+  font-size: 36px;
+}
