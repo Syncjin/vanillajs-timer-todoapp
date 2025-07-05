@@ -45,8 +45,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader", "postcss-loader"], // 체인은 역순으로 실행
+        test: /\.scss$/i,
+        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"], // 체인은 역순으로 실행
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i, // 이미지 파일 처리
