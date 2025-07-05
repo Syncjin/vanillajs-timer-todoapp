@@ -13,3 +13,33 @@
   background: url('@assets/images/millie.png');
   font-size: 36px;
 }
+
+.header-inner {
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.text {
+  font-family: 'MyFont';
+}
+
+
+
+.content-view {
+  display: flex;
+  background-color: blue;
+  flex-direction: row;
+  width: 100%;
+  height: 600px;
+}
+
+.content-view .left-view {
+  flex: 1;
+}
+
+.content-view .right-view {
+  flex: 1;
+}

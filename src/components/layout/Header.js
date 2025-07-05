@@ -1,5 +1,7 @@
 import { Component } from "../common/Component";
 import Text from "@components/ui/Text";
+import MillieIcon from "@assets/images/millie.png";
+import "./Header.scss";
 
 export class Header extends Component {
   createElement() {
@@ -11,11 +13,17 @@ export class Header extends Component {
 
     this.el.className = className;
     const inner = document.createElement("div");
+    inner.className = "header-inner";
+
+    const logo = document.createElement("img");
+    logo.src = MillieIcon;
+    logo.alt = "Millie Logo";
+    logo.className = "logo";
+
     const text = new Text({ as: "h1", text: "밀리의 서재 사전 과제" });
 
-    inner.className = "header-inner";
+    inner.appendChild(logo);
     inner.appendChild(text.el);
-
     this.el.appendChild(inner);
   }
 }
