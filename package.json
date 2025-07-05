@@ -1,0 +1,36 @@
+{
+  "name": "millie",
+  "version": "1.0.0",
+  "description": "millie test",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "start": "webpack serve --open",
+    "dev": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Syncjin/millie.git"
+  },
+  "keywords": [],
+  "author": "syncjin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Syncjin/millie/issues"
+  },
+  "homepage": "https://github.com/Syncjin/millie#readme",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "eslint": "^9.30.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "html-webpack-plugin": "^5.6.3",
+    "postcss-loader": "^8.1.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2",
+    "webpack-merge": "^6.0.1"
+  }
+}
