@@ -1,0 +1,31 @@
+.todo-input-inner {
+  border: 1px solid gray;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  .input {
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    gap: 5px;
+    
+    input {
+      // width: 100%;
+      padding: 8px 5px;
+    }
+  }
+  .add-btn {
+    background-color: skyblue;
+    border: none;
+    width: 80px;
+    height: 52px;
+    cursor: pointer;
+  }
+}
+
+.todo-input {
+  padding: 10px;
+}
+
