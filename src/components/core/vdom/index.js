@@ -79,10 +79,22 @@ export function diff(parent, oldVNode, newVNode, index = 0) {
       if (oldMatch) {
         // 재사용: 기존 vnode로 diff
         diff(parent, oldMatch.child, newChild, i);
+
+        const currentEl = oldMatch.child._el;
+        const expectedPosition = parent.childNodes[i];
+
+        if (currentEl && currentEl !== expectedPosition) {
+          parent.insertBefore(currentEl, expectedPosition);
+        }
+
         keyedOld.delete(newChild.key);
       } else {
         // 새로운 노드 추가
-        diff(parent, undefined, newChild, i);
+        // diff(parent, undefined, newChild, i);
+
+        const newEl = renderDom(newChild);
+        const expectedPosition = parent.childNodes[i];
+        parent.insertBefore(newEl, expectedPosition);
       }
       i++;
     }
