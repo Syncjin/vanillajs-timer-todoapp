@@ -19,8 +19,8 @@ class TodoItem extends Component {
     this.countDown = v(CountDown, {
       time: Number(time),
       onComplete: () => {
+        console.log("onComplete???");
         closeBtnOnClick?.(id);
-        this.countDown?.unmount();
       },
     });
 

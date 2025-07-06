@@ -28,6 +28,7 @@ class TodoList extends Component {
     console.log("render? todos", todos);
     const childrenVNode = todos.map((todo) =>
       v(TodoItem, {
+        key: todo.id,
         id: todo.id,
         title: todo.title,
         time: todo.time,
@@ -52,27 +53,6 @@ class TodoList extends Component {
     }
 
     this.oldVNode = newVNode;
-
-    // const todoIdSet = new Set(todos.map((todo) => String(todo.id)));
-    // // 삭제된 DOM 제거
-    // Array.from(this.listView.children).forEach((child) => {
-    //   const id = child.dataset.id;
-    //   if (!todoIdSet.has(id)) {
-    //     child.remove();
-    //   }
-    // });
-
-    // const existingIds = new Set(Array.from(this.listView.children).map((child) => child.dataset.id));
-
-    // for (const todo of todos) {
-    //   if (!existingIds.has(String(todo.id))) {
-    //     const item = v(TodoItem, { id: todo.id, title: todo.title, time: todo.time, className: "todo-item", closeBtnOnClick: this.closeBtnOnClick });
-
-    //     console.log("item???", item);
-    //     item.props.id = todo.id; // 추후 중복 체크용
-    //     this.listView.appendChild(renderDom(item));
-    //   }
-    // }
   }
 
   render() {

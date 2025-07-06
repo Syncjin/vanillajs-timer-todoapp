@@ -2,7 +2,7 @@
  * 가상 돔 만들기
  */
 export function v(type, props = {}, ...children) {
-  return { type, props, children };
+  return { type, props, children, key: props?.key };
 }
 
 /**
@@ -32,43 +32,66 @@ export function renderDom(node) {
       }
     }
     (node.children || []).forEach((child) => {
-      el.appendChild(render(child));
+      el.appendChild(renderDom(child));
     });
+    node._el = el;
     return el;
   }
 
   // fragment 처리
   if (node.type === "fragment") {
-    const container = document.createElement("div");
-    container.setAttribute("data-fragment", "true");
-
+    const container = document.createDocumentFragment();
     (node.children || []).forEach((child) => {
       container.appendChild(renderDom(child));
     });
-
     return container;
   }
   // 컴포넌트 클래스 (Component 상속한 경우)
   const instance = new node.type(node.props);
   node._instance = instance; // diff에서 추적 가능하도록
-  const dom = instance.el;
-  return dom;
+  node._el = instance.el;
+  return instance.el;
 }
 
 export function diff(parent, oldVNode, newVNode, index = 0) {
   const el = parent.childNodes[index];
 
-  console.log("diff???", el);
-  console.log("diff??? oldVNode", oldVNode);
-  console.log("diff??? newVNode", newVNode);
+  console.log("diff parent", parent);
+  console.log("diff oldVNode", oldVNode);
+  console.log("diff newVNode", newVNode);
+  console.log("diff el", el);
+
   if (oldVNode?.type === "fragment" && newVNode?.type === "fragment") {
     const oldChildren = oldVNode.children || [];
     const newChildren = newVNode.children || [];
-    const max = Math.max(oldVNode.children.length, newVNode.children.length);
 
-    for (let i = 0; i < max; i++) {
-      diff(parent, oldChildren[i], newChildren[i], i);
+    const keyedOld = new Map();
+    oldChildren.forEach((child, idx) => {
+      if (child?.key != null) {
+        keyedOld.set(child.key, { child, idx });
+      }
+    });
+
+    let i = 0;
+
+    for (const newChild of newChildren) {
+      const oldMatch = newChild?.key != null ? keyedOld.get(newChild.key) : undefined;
+      if (oldMatch) {
+        // 재사용: 기존 vnode로 diff
+        diff(parent, oldMatch.child, newChild, i);
+        keyedOld.delete(newChild.key);
+      } else {
+        // 새로운 노드 추가
+        diff(parent, undefined, newChild, i);
+      }
+      i++;
     }
+
+    // 남은 old vnode들은 제거
+    for (const { child, idx } of keyedOld.values()) {
+      diff(parent, child, undefined, idx);
+    }
+
     return;
   }
 
@@ -85,45 +108,21 @@ export function diff(parent, oldVNode, newVNode, index = 0) {
     if (el) parent.removeChild(el);
     return;
   }
-  // 타입이 달라졌다면 노드 교체
-  if (oldVNode?.type !== newVNode?.type) {
-    if (oldVNode?._instance?.componentWillUnmount) {
+
+  // 타입 or key 불일치 시 교체
+  const isDifferentType = oldVNode.type !== newVNode.type;
+  const isDifferentKey = oldVNode.key !== newVNode.key;
+
+  if (isDifferentType || isDifferentKey) {
+    if (oldVNode._instance?.componentWillUnmount) {
       oldVNode._instance.componentWillUnmount();
     }
     const newEl = renderDom(newVNode);
     if (el) {
-      parent.replaceChild(renderDom(newEl), el);
-    } else {
-      parent.appendChild(renderDom(newEl));
-    }
-    return;
-  }
-  // 동일한 태그일 때 자식 재귀 비교
-  if (typeof newVNode.type === "function") {
-    const oldInstance = oldVNode._instance;
-    const newInstance = new newVNode.type(newVNode.props);
-    newVNode._instance = newInstance;
-
-    if (oldInstance?.componentWillUnmount) {
-      oldInstance.componentWillUnmount();
-    }
-
-    // 여기서 직접 DOM을 바꿀지, 내부 diff 할지는 판단 필요
-    const newEl = newInstance.el;
-    const oldEl = oldInstance?.el;
-
-    if (oldEl && parent.contains(oldEl)) {
-      parent.replaceChild(newEl, oldEl);
+      parent.replaceChild(newEl, el);
     } else {
       parent.appendChild(newEl);
     }
     return;
-  }
-
-  if (typeof newVNode.type === "string") {
-    const max = Math.max(oldVNode.children.length, newVNode.children.length);
-    for (let i = 0; i < max; i++) {
-      diff(el, oldVNode.children[i], newVNode.children[i], i);
-    }
   }
 }
