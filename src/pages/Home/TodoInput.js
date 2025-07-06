@@ -3,6 +3,7 @@ import Text from "@components/ui/Text";
 import "./TodoInput.scss";
 import Input from "@components/ui/Input";
 import Button from "@components/ui/Button";
+import { shortId } from "@utils/uuid.js";
 
 import todoStore from "@store/todoStore";
 import { v, renderDom } from "@components/core/vdom";
@@ -20,7 +21,7 @@ export class TodoInput extends Component {
     console.log("endTodoInput text", time);
     if (!content || !time) return;
 
-    const newTodo = { id: Date.now(), title: content, time };
+    const newTodo = { id: shortId(), title: content, time, regDate: Date.now() };
     todoStore.state.todoList = [...todoStore.state.todoList, newTodo];
   }
 

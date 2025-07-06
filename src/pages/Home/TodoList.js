@@ -16,6 +16,30 @@ class TodoList extends Component {
     this.oldVNode = null; // 이전 VDOM 저장용
   }
 
+  sortInputOrderOnClick() {
+    console.log("sortInputOrderOnClick", todoStore.state.todoList);
+  }
+
+  sortRemainingTimeOrderOnClick() {
+    console.log("sortRemainingTimeOrderOnClick", todoStore.state.todoList);
+
+    const todos = [...todoStore.state.todoList];
+    console.log("이전 todos", todos);
+    const now = Date.now();
+    todos.sort((a, b) => {
+      const remainA = Math.max(0, Number(a.time * 1000) - (now - a.regDate));
+      const remainB = Math.max(0, Number(b.time * 1000) - (now - b.regDate));
+      console.log("Number(a.time)", Number(a.time));
+      console.log("(now - a.regDate)", now - a.regDate);
+      console.log("remainA", remainA);
+      console.log("remainB", remainB);
+      return remainA - remainB;
+    });
+
+    console.log("다음 todos", todos);
+    todoStore.state.todoList = [...todos];
+  }
+
   closeBtnOnClick(id) {
     console.log("closeBtnOnClick", id);
     todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
@@ -28,10 +52,8 @@ class TodoList extends Component {
     console.log("render? todos", todos);
     const childrenVNode = todos.map((todo) =>
       v(TodoItem, {
+        ...todo,
         key: todo.id,
-        id: todo.id,
-        title: todo.title,
-        time: todo.time,
         className: "todo-item",
         closeBtnOnClick: this.closeBtnOnClick,
       })
@@ -68,8 +90,8 @@ class TodoList extends Component {
     sortView.className = "sort-view";
     closeView.className = "close-view";
 
-    const sortInputOrderBtn = v(Button, { label: "입력한 순" });
-    const sortRemainingTimeOrderBtn = v(Button, { label: "남은 시간 순" });
+    const sortInputOrderBtn = v(Button, { label: "입력한 순", onClick: this.sortInputOrderOnClick });
+    const sortRemainingTimeOrderBtn = v(Button, { label: "남은 시간 순", onClick: this.sortRemainingTimeOrderOnClick });
     const allCloseBtn = v(Button, { label: "전체 종료", className: "close-btn", onClick: () => {} });
     const closeBtn = v(Button, { label: "선택 종료", className: "close-btn", onClick: () => {} });
 
