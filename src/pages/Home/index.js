@@ -10,6 +10,17 @@ class Home extends Component {
     return div;
   }
 
+  makeTodoInput(parent) {
+    const todoInput = new TodoInput({ className: "todo-input" });
+
+    parent.appendChild(todoInput.el);
+  }
+
+  makeTodoList(parent) {
+    const todoList = new TodoList({ className: "todo-list" });
+    parent.appendChild(todoList.el);
+  }
+
   render() {
     /** 레이아웃 생성 */
     const header = new Header({ className: "header" });
@@ -27,11 +38,10 @@ class Home extends Component {
     contentView.appendChild(leftView);
     contentView.appendChild(rightView);
 
-    const todoInput = new TodoInput({ className: "todo-input" });
-    const todoList = new TodoList({ className: "todo-list" });
+    this.makeTodoInput(leftView);
+    this.makeTodoList(leftView);
+
     this.el.appendChild(contentView);
-    leftView.appendChild(todoInput.el);
-    leftView.appendChild(todoList.el);
   }
 }
 

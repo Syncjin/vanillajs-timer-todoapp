@@ -2,10 +2,29 @@ import { Component } from "@components/common/Component";
 import Text from "@components/ui/Text";
 import "./TodoList.scss";
 import Button from "@components/ui/Button";
+import todoStore from "@store/todoStore";
+import TodoItem from "@pages/Home/TodoItem";
 
-export class TodoList extends Component {
+class TodoList extends Component {
   createElement() {
     return document.createElement("div");
+  }
+
+  closeBtnOnClick(id) {
+    console.log("closeBtnOnClick", id);
+    todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
+  }
+
+  renderItem() {
+    console.log("render?");
+    const todos = todoStore.state.todoList;
+    this.listView.innerHTML = "";
+
+    console.log("renderItem todo", todos);
+    todos.map((todo) => {
+      const item = new TodoItem({ id: todo.id, title: todo.title, time: todo.time, className: "todo-item", closeBtnOnClick: this.closeBtnOnClick });
+      this.listView.appendChild(item.el);
+    });
   }
 
   render() {
@@ -34,14 +53,18 @@ export class TodoList extends Component {
     listHeaderView.appendChild(sortView);
     listHeaderView.appendChild(closeView);
 
-    const listView = document.createElement("div");
+    this.listView = document.createElement("div");
 
     this.el.appendChild(text.el);
     this.el.appendChild(listHeaderView);
 
-    listView.className = "todo-list-view";
+    this.listView.className = "todo-list-view";
 
-    this.el.appendChild(listView);
+    this.el.appendChild(this.listView);
+
+    // 상태 연결
+    todoStore.observe(() => this.renderItem());
+    this.renderItem();
   }
 }
 
