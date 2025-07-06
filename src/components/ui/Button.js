@@ -1,4 +1,4 @@
-import { Component } from "../common/Component";
+import { Component } from "@components/core/Component";
 
 export class Button extends Component {
   createElement() {
@@ -17,18 +17,6 @@ export class Button extends Component {
     if (typeof onClick === "function") {
       this.el.addEventListener("click", onClick);
     }
-  }
-
-  componentDidMount() {
-    console.log("componentDidMount");
-  }
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
-  }
-
-  componentWillUnmount() {
-    console.log("componentDidUpdate");
   }
 }
 

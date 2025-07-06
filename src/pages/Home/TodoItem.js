@@ -1,8 +1,8 @@
-import { Component } from "@components/common/Component";
+import { Component } from "@components/core/Component";
 import Button from "@components/ui/Button";
 import Text from "@components/ui/Text";
 import CountDown from "@components/ui/CountDown";
-
+import { v, renderDom } from "@components/core/vdom";
 import "./TodoItem.scss";
 
 class TodoItem extends Component {
@@ -14,16 +14,17 @@ class TodoItem extends Component {
     const { className = "", id, title, time, closeBtnOnClick } = this.props;
 
     console.log("TodoItem", this.props);
-    const text = new Text({ text: title });
+    const text = v(Text, { text: title });
     // const timer = new Text({ text: `${time}초` });
-    this.timer = new CountDown({
+    this.countDown = v(CountDown, {
       time: Number(time),
       onComplete: () => {
         closeBtnOnClick?.(id);
+        this.countDown?.unmount();
       },
     });
 
-    const closeBtn = new Button({
+    const closeBtn = v(Button, {
       label: "종료",
       className: "close-btn",
       onClick: () => {
@@ -33,13 +34,15 @@ class TodoItem extends Component {
     });
 
     this.el.className = className;
-    this.el.appendChild(text.el);
-    this.el.appendChild(this.timer.el);
-    this.el.appendChild(closeBtn.el);
+    this.el.appendChild(renderDom(text));
+    this.el.appendChild(renderDom(this.countDown));
+    this.el.appendChild(renderDom(closeBtn));
   }
 
   componentWillUnmount() {
-    this.countDown?.unmount(); // 시간초가 다 되기전 종료시
+    console.log("this.countDown", this.countDown._instance);
+    this.countDown._instance?.unmount(); // 시간초가 다 되기전 종료시
+    console.log("todoitem  componentWillUnmount");
   }
 }
 

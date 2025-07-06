@@ -1,4 +1,4 @@
-import { Component } from "@components/common/Component";
+import { Component } from "@components/core/Component";
 
 /**
  * input + label을 합친 컴포넌트입니다.

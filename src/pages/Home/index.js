@@ -1,7 +1,8 @@
-import { Component } from "@components/common/Component";
+import { Component } from "@components/core/Component";
 import Header from "@components/layout/Header";
 import TodoInput from "@pages/Home/TodoInput";
 import TodoList from "@pages/Home/TodoList";
+import { v, renderDom } from "@components/core/vdom";
 
 class Home extends Component {
   createElement() {
@@ -11,20 +12,20 @@ class Home extends Component {
   }
 
   makeTodoInput(parent) {
-    const todoInput = new TodoInput({ className: "todo-input" });
+    const todoInput = v(TodoInput, { className: "todo-input" });
 
-    parent.appendChild(todoInput.el);
+    parent.appendChild(renderDom(todoInput));
   }
 
   makeTodoList(parent) {
-    const todoList = new TodoList({ className: "todo-list" });
-    parent.appendChild(todoList.el);
+    const todoList = v(TodoList, { className: "todo-list" });
+    parent.appendChild(renderDom(todoList));
   }
 
   render() {
     /** 레이아웃 생성 */
-    const header = new Header({ className: "header" });
-    this.el.appendChild(header.el);
+    const header = v(Header, { className: "header" });
+    this.el.appendChild(renderDom(header));
 
     const contentView = document.createElement("div");
     contentView.className = "content-view";

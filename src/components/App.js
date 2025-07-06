@@ -1,5 +1,5 @@
-import { Component } from "./common/Component";
-import Router from "./common/Router.js";
+import { Component } from "./core/Component";
+import Router from "./core/Router.js";
 import Home from "@pages/Home/index.js";
 
 class App extends Component {

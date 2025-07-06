@@ -1,8 +1,8 @@
-import { Component } from "../common/Component";
+import { Component } from "@components/core/Component";
 import Text from "@components/ui/Text";
 import MillieIcon from "@assets/images/millie.png";
 import "./Header.scss";
-
+import { v, renderDom } from "@components/core/vdom";
 export class Header extends Component {
   createElement() {
     return document.createElement("header");
@@ -20,10 +20,10 @@ export class Header extends Component {
     logo.alt = "Millie Logo";
     logo.className = "logo";
 
-    const text = new Text({ as: "h1", text: "밀리의 서재 사전 과제" });
+    const text = v(Text, { as: "h1", text: "밀리의 서재 사전 과제" });
 
     inner.appendChild(logo);
-    inner.appendChild(text.el);
+    inner.appendChild(renderDom(text));
     this.el.appendChild(inner);
   }
 }

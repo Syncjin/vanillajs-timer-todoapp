@@ -1,4 +1,4 @@
-import { Component } from "@components/common/Component";
+import { Component } from "@components/core/Component";
 
 class CountDown extends Component {
   createElement() {
@@ -7,15 +7,19 @@ class CountDown extends Component {
 
   render() {
     this.time = this.props.time ?? 0; // 초기 시간 (초)
-    this.onComplete = this.props.onComplete;
     this.el.textContent = `${this.time}초`;
+  }
 
+  componentDidMount() {
     this.interval = setInterval(() => {
       this.time--;
+      console.log("interval", this.time);
 
       if (this.time <= 0) {
         this.el.textContent = "0초";
         clearInterval(this.interval);
+        this.interval = null;
+
         if (typeof this.onComplete === "function") {
           this.onComplete();
         }
@@ -27,8 +31,12 @@ class CountDown extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
-    super.destroy?.();
+    console.log("CountDown  componentWillUnmount");
+    if (this.interval) {
+      console.log("clear??");
+      clearInterval(this.interval);
+      this.interval = null;
+    }
   }
 }
 

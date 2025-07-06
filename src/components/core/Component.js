@@ -34,6 +34,7 @@ export class Component {
   }
 
   unmount() {
+    console.log("unmount?>?");
     if (typeof this.componentWillUnmount === "function") {
       this.componentWillUnmount();
     }

@@ -1,4 +1,4 @@
-import { Component } from "@components/common/Component";
+import { Component } from "@components/core/Component";
 
 export class Text extends Component {
   createElement() {
