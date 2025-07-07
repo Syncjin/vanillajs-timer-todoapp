@@ -18,5 +18,8 @@
   }
   .close-view {
     button {background-color: red}
+    .select-close-btn:disabled {
+      background-color: gray;
+    }
   }
 }

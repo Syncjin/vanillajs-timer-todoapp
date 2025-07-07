@@ -22,6 +22,7 @@ function sortInputOrderFn(state) {
 
 const todoStore = new Store({
   todoList: [],
+  todoCloseList: [],
   sortType: "inputOrder",
   sortRemainingTimeOrderFn,
   sortInputOrderFn,

@@ -1,13 +1,10 @@
 import { Component } from "@components/core/Component";
 import Text from "@components/ui/Text";
 import "./TodoList.scss";
-import Button from "@components/ui/Button";
 import todoStore from "@store/todoStore";
-import TodoItem from "@pages/Home/TodoItem";
-import TodoListHeader from "@pages/Home/TodoListHeader";
-
+import TodoItem from "@pages/Home/view/item/TodoItem";
+import TodoListHeader from "@pages/Home/view/TodoListHeader";
 import { v, diff, renderDom } from "@components/core/vdom";
-import CheckIcon from "@assets/images/check.svg";
 
 class TodoList extends Component {
   createElement() {
@@ -27,9 +24,10 @@ class TodoList extends Component {
 
   closeBtnOnClick(id) {
     console.log("closeBtnOnClick", id);
-    todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
 
-    console.log("result", todoStore.state.todoList);
+    const closeItem = todoStore.state.todoList.filter((todo) => todo.id === id);
+    todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
+    todoStore.state.todoCloseList = [...todoStore.state.todoCloseList, ...closeItem];
   }
 
   renderItem() {

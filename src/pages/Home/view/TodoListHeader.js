@@ -33,6 +33,7 @@ class TodoListHeader extends Component {
 
   allCloseBtnOnClick() {
     console.log("allCloseBtnOnClick");
+    todoStore.state.todoCloseList = todoStore.state.todoList;
     todoStore.state.todoList = [];
   }
 
@@ -41,13 +42,15 @@ class TodoListHeader extends Component {
       "selectCloseBtnOnClick",
       todoStore.state.todoList.filter((todo) => todo.isChecked)
     );
-    todoStore.state.todoList = todoStore.state.todoList.filter((todo) => !todo.isChecked);
 
-    // console.log("result", todoStore.state.todoList);
+    const checkList = todoStore.state.todoList.filter((todo) => !todo.isChecked);
+    const unCheckList = todoStore.state.todoList.filter((todo) => todo.isChecked);
+    todoStore.state.todoList = checkList;
+    todoStore.state.todoCloseList = unCheckList;
   }
 
-  renderBtn(sortView) {
-    sortView.innerHTML = "";
+  renderBtn() {
+    this.sortView.innerHTML = "";
     const sortType = todoStore.state.sortType;
     const icon = () =>
       v("img", {
@@ -71,8 +74,30 @@ class TodoListHeader extends Component {
       children: sortType === "remainingTimeOrder" ? [icon(), "남은 시간 순"] : ["남은 시간 순"],
     });
 
-    sortView.appendChild(renderDom(sortInputOrderBtn));
-    sortView.appendChild(renderDom(sortRemainingTimeOrderBtn));
+    this.sortView.appendChild(renderDom(sortInputOrderBtn));
+    this.sortView.appendChild(renderDom(sortRemainingTimeOrderBtn));
+  }
+
+  renderCloseBtns() {
+    this.closeView.innerHTML = "";
+
+    const hasChecked = todoStore.state.todoList.some((todo) => todo.isChecked);
+
+    const allCloseBtn = v(Button, {
+      label: "전체 종료",
+      className: "close-btn",
+      onClick: () => this.allCloseBtnOnClick(),
+    });
+
+    const closeBtn = v(Button, {
+      label: "선택 종료",
+      className: "select-close-btn",
+      disabled: !hasChecked,
+      onClick: () => this.selectCloseBtnOnClick(),
+    });
+
+    this.closeView.appendChild(renderDom(allCloseBtn));
+    this.closeView.appendChild(renderDom(closeBtn));
   }
 
   render() {
@@ -81,23 +106,21 @@ class TodoListHeader extends Component {
     this.el.className = className;
 
     const listHeaderView = document.createElement("div");
-    const sortView = document.createElement("div");
-    const closeView = document.createElement("div");
+    this.sortView = document.createElement("div");
+    this.closeView = document.createElement("div");
     listHeaderView.className = "list-header-view";
-    sortView.className = "sort-view";
-    closeView.className = "close-view";
+    this.sortView.className = "sort-view";
+    this.closeView.className = "close-view";
 
-    const allCloseBtn = v(Button, { label: "전체 종료", className: "close-btn", onClick: this.allCloseBtnOnClick });
-    const closeBtn = v(Button, { label: "선택 종료", className: "close-btn", onClick: this.selectCloseBtnOnClick });
+    this.el.appendChild(this.sortView);
+    this.el.appendChild(this.closeView);
 
-    closeView.appendChild(renderDom(allCloseBtn));
-    closeView.appendChild(renderDom(closeBtn));
-
-    this.el.appendChild(sortView);
-    this.el.appendChild(closeView);
-
-    todoStore.observe(() => this.renderBtn(sortView));
-    this.renderBtn(sortView);
+    todoStore.observe(() => {
+      this.renderBtn();
+      this.renderCloseBtns();
+    });
+    this.renderBtn();
+    this.renderCloseBtns();
   }
 }
 

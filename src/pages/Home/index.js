@@ -1,8 +1,10 @@
 import { Component } from "@components/core/Component";
 import Header from "@components/layout/Header";
-import TodoInput from "@pages/Home/TodoInput";
-import TodoList from "@pages/Home/TodoList";
+import TodoInput from "@pages/Home/view/TodoInput";
+import TodoList from "@pages/Home/view/TodoList";
+import TodoCloseList from "@pages/Home/view/TodoCloseList";
 import { v, renderDom } from "@components/core/vdom";
+import "./home.scss";
 
 class Home extends Component {
   createElement() {
@@ -19,6 +21,11 @@ class Home extends Component {
 
   makeTodoList(parent) {
     const todoList = v(TodoList, { className: "todo-list" });
+    parent.appendChild(renderDom(todoList));
+  }
+
+  makeTodoCloseList(parent) {
+    const todoList = v(TodoCloseList, { className: "todo-close-list" });
     parent.appendChild(renderDom(todoList));
   }
 
@@ -41,6 +48,7 @@ class Home extends Component {
 
     this.makeTodoInput(leftView);
     this.makeTodoList(leftView);
+    this.makeTodoCloseList(rightView);
 
     this.el.appendChild(contentView);
   }
