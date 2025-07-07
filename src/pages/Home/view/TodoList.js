@@ -29,16 +29,16 @@ class TodoList extends Component {
     const closeItem = todoStore.state.todoList.filter((todo) => todo.id === id);
     todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
     todoStore.state.todoCloseList = [...todoStore.state.todoCloseList, ...closeItem];
-    console.log("closeItem", closeItem);
     if (!closeItem) return;
-    popupStore.state.open({
+
+    const popupId = popupStore.state.showPopup({
       text: `[${closeItem?.[0].title}] 아이템이 종료 되었습니다.`,
       buttons: [
         {
           label: "확인",
           onClick: () => {
             // 삭제 로직
-            popupStore.state.close();
+            popupStore.state.closePopup(popupId);
           },
         },
       ],

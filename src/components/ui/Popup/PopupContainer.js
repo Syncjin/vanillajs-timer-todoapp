@@ -8,20 +8,23 @@ class PopupContainer extends Component {
     return document.createElement("div");
   }
 
-  renderPopup() {
+  renderPopups() {
     this.el.innerHTML = "";
 
-    const { visible, text, buttons } = popupStore.state;
-    if (!visible) return;
-
-    const popupVNode = v(Popup, { text, buttons });
-    const popupDom = renderDom(popupVNode);
-    this.el.appendChild(popupDom);
+    popupStore.state.popups.forEach((popup) => {
+      const popupVNode = v(Popup, {
+        ...popup,
+        onClose: () => popupStore.state.closePopup(popup.id),
+      });
+      this.el.appendChild(renderDom(popupVNode));
+    });
   }
 
   render() {
-    popupStore.observe(() => this.renderPopup());
-    this.renderPopup();
+    popupStore.observe(() => {
+      this.renderPopups();
+    });
+    this.renderPopups();
   }
 }
 

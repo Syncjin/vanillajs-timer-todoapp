@@ -1,19 +1,24 @@
-// @store/popupStore.js
-import Store from "@store/store";
+import Store from "@store/store.js";
+import { shortId } from "@utils/uuid.js";
+/**
+ * 팝업이 여러개 나올 수 있도록
+ */
+
+function showPopup(state) {
+  const popupWithId = { ...state, id: shortId() };
+  popupStore.state.popups = [...popupStore.state.popups, popupWithId];
+  return popupWithId.id;
+}
 
 const popupStore = new Store({
-  visible: false,
-  text: "",
-  buttons: [],
-  open({ text, buttons }) {
-    popupStore.state.visible = true;
-    popupStore.state.text = text;
-    popupStore.state.buttons = buttons;
+  popups: [],
+  showPopup,
+  closePopup(id) {
+    popupStore.state.popups = popupStore.state.popups.filter((p) => p.id !== id);
   },
-  close() {
-    popupStore.state.visible = false;
-    popupStore.state.text = "";
-    popupStore.state.buttons = [];
+
+  clearPopups() {
+    popupStore.state.popups = [];
   },
 });
 

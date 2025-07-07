@@ -18,6 +18,7 @@ class App extends Component {
       this.el // <main id="app">에 렌더
     );
     const popupContainer = new PopupContainer();
+    popupContainer.el.className = "popup-container";
     this.el.appendChild(popupContainer.el); // 팝업 항상 렌더
   }
   render() {}

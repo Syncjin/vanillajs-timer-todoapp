@@ -8,6 +8,11 @@ export class Popup extends Component {
   createElement() {
     const container = document.createElement("div");
     container.className = "popup-backdrop";
+
+    if (this.props.zIndex != null) {
+      container.style.zIndex = this.props.zIndex;
+    }
+
     return container;
   }
 
