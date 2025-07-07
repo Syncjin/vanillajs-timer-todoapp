@@ -5,6 +5,7 @@ import todoStore from "@store/todoStore";
 import TodoItem from "@pages/Home/view/item/TodoItem";
 import TodoListHeader from "@pages/Home/view/TodoListHeader";
 import { v, diff, renderDom } from "@components/core/vdom";
+import popupStore from "@store/popupStore";
 
 class TodoList extends Component {
   createElement() {
@@ -28,6 +29,20 @@ class TodoList extends Component {
     const closeItem = todoStore.state.todoList.filter((todo) => todo.id === id);
     todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
     todoStore.state.todoCloseList = [...todoStore.state.todoCloseList, ...closeItem];
+    console.log("closeItem", closeItem);
+    if (!closeItem) return;
+    popupStore.state.open({
+      text: `[${closeItem?.[0].title}] 아이템이 종료 되었습니다.`,
+      buttons: [
+        {
+          label: "확인",
+          onClick: () => {
+            // 삭제 로직
+            popupStore.state.close();
+          },
+        },
+      ],
+    });
   }
 
   renderItem() {
