@@ -56,52 +56,60 @@ export function renderDom(node) {
 export function diff(parent, oldVNode, newVNode, index = 0) {
   const el = parent.childNodes[index];
 
-  console.log("diff parent", parent);
-  console.log("diff oldVNode", oldVNode);
-  console.log("diff newVNode", newVNode);
-  console.log("diff el", el);
+  // console.log("diff parent", parent);
+  // console.log("diff oldVNode", oldVNode);
+  // console.log("diff newVNode", newVNode);
+  // console.log("diff el", el);
 
   if (oldVNode?.type === "fragment" && newVNode?.type === "fragment") {
     const oldChildren = oldVNode.children || [];
     const newChildren = newVNode.children || [];
 
+    // console.log("diff oldChildren", oldChildren);
+    // console.log("diff newChildren", newChildren);
+
     const keyedOld = new Map();
     oldChildren.forEach((child, idx) => {
-      if (child?.key != null) {
-        keyedOld.set(child.key, { child, idx });
-      }
+      if (child?.key != null) keyedOld.set(child.key, { child, idx });
     });
 
-    let i = 0;
-
-    for (const newChild of newChildren) {
+    for (let i = 0; i < newChildren.length; i++) {
+      const newChild = newChildren[i];
       const oldMatch = newChild?.key != null ? keyedOld.get(newChild.key) : undefined;
+
       if (oldMatch) {
-        // 재사용: 기존 vnode로 diff
         diff(parent, oldMatch.child, newChild, i);
 
-        const currentEl = oldMatch.child._el;
-        const expectedPosition = parent.childNodes[i];
+        newChild._el = oldMatch.child._el;
+        newChild._instance = oldMatch.child._instance;
 
-        if (currentEl && currentEl !== expectedPosition) {
-          parent.insertBefore(currentEl, expectedPosition);
+        // 위치 관련
+        const desiredEl = oldMatch.child._el;
+        const currentEls = Array.from(parent.childNodes);
+        const correctPosition = currentEls[i]; // i번째에 와야 할 자리
+
+        if (desiredEl && desiredEl !== correctPosition && desiredEl.parentNode === parent) {
+          parent.insertBefore(desiredEl, correctPosition ?? null);
         }
 
         keyedOld.delete(newChild.key);
       } else {
-        // 새로운 노드 추가
-        // diff(parent, undefined, newChild, i);
-
-        const newEl = renderDom(newChild);
-        const expectedPosition = parent.childNodes[i];
-        parent.insertBefore(newEl, expectedPosition);
+        // 새로 생긴 노드
+        diff(parent, undefined, newChild, i);
       }
-      i++;
     }
 
     // 남은 old vnode들은 제거
-    for (const { child, idx } of keyedOld.values()) {
-      diff(parent, child, undefined, idx);
+    for (const { child } of keyedOld.values()) {
+      // 언마운트 호출
+      if (child._instance?.componentWillUnmount) {
+        child._instance.componentWillUnmount();
+      }
+      // 실제 DOM 엘리먼트만 제거
+      const elToRemove = child._el;
+      if (elToRemove && elToRemove.parentNode === parent) {
+        parent.removeChild(elToRemove);
+      }
     }
 
     return;
