@@ -33,7 +33,9 @@ class TodoListHeader extends Component {
 
   allCloseBtnOnClick() {
     console.log("allCloseBtnOnClick");
-    todoStore.state.todoCloseList = todoStore.state.todoList;
+
+    const closeList = [...todoStore.state.todoList, ...todoStore.state.todoCloseList];
+    todoStore.state.todoCloseList = closeList;
     todoStore.state.todoList = [];
   }
 
