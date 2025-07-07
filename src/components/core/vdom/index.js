@@ -15,6 +15,10 @@ export function v(type, props = {}, ...children) {
  */
 
 export function renderDom(node) {
+  if (typeof node === "string" || typeof node === "number") {
+    return document.createTextNode(String(node));
+  }
+
   if (typeof node.type === "string") {
     // 문자열로 태그 생성
     const el = document.createElement(node.type);
