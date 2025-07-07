@@ -9,12 +9,18 @@ class CountDown extends Component {
     this.time = this.props.time ?? 0; // 초기 시간 (초)
     this.el.textContent = `${this.time}초`;
     this.onComplete = this.props.onComplete;
+    this.onFinalSoon = this.props.onFinalSoon;
   }
 
   componentDidMount() {
     this.interval = setInterval(() => {
       this.time--;
 
+      if (this.time <= 5) {
+        if (typeof this.onFinalSoon === "function") {
+          this.onFinalSoon();
+        }
+      }
       if (this.time <= 0) {
         this.el.textContent = "0초";
         clearInterval(this.interval);

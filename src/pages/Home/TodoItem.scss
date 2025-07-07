@@ -3,4 +3,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  word-break: break-word;       
+  overflow-wrap: break-word;
+  gap: 50px;
+  &.active {
+    background-color: orange;
+  }
 }

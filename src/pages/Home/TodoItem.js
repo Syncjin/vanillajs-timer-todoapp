@@ -22,6 +22,10 @@ class TodoItem extends Component {
         console.log("onComplete???");
         closeBtnOnClick?.(id);
       },
+      onFinalSoon: () => {
+        console.log("onFinalSoon???");
+        this.el.className = `${className} active`;
+      },
     });
 
     const closeBtn = v(Button, {

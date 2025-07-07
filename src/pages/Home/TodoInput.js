@@ -7,6 +7,7 @@ import { shortId } from "@utils/uuid.js";
 
 import todoStore from "@store/todoStore";
 import { v, renderDom } from "@components/core/vdom";
+import { isValidContent, isValidTime } from "@utils/regex";
 
 export class TodoInput extends Component {
   createElement() {
@@ -17,12 +18,27 @@ export class TodoInput extends Component {
     console.log("addTodoOnClick", this.todoInput);
     const content = this.todoInput._instance.inputEl.value;
     const time = this.endTodoInput._instance.inputEl.value;
-    console.log("todoInput text", content);
-    console.log("endTodoInput text", time);
-    if (!content || !time) return;
+    /** 입력 필수 */
+    if (!isValidContent(content)) {
+      console.log("content", content);
+      alert("할 일 작성을 입력해주세요");
+      return;
+    }
+
+    if (time.trim() === "") {
+      alert("종료 시간을 입력해주세요");
+      return;
+    }
+
+    if (!isValidTime(time)) {
+      alert("종료 시간은 숫자만 입력해주세요");
+      return;
+    }
 
     const newTodo = { id: shortId(), title: content, time, regDate: Date.now() };
     todoStore.state.todoList = [...todoStore.state.todoList, newTodo];
+    this.todoInput._instance.inputEl.value = "";
+    this.endTodoInput._instance.inputEl.value = "";
   }
 
   render() {
