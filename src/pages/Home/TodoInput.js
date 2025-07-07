@@ -18,7 +18,7 @@ export class TodoInput extends Component {
     console.log("addTodoOnClick", this.todoInput);
     const content = this.todoInput._instance.inputEl.value;
     const time = this.endTodoInput._instance.inputEl.value;
-    /** 입력 필수 */
+    // 입력 필수, 현재 정렬 상태 보고 store 정렬 함수 실행
     if (!isValidContent(content)) {
       console.log("content", content);
       alert("할 일 작성을 입력해주세요");
@@ -36,7 +36,19 @@ export class TodoInput extends Component {
     }
 
     const newTodo = { id: shortId(), title: content, time, regDate: Date.now() };
-    todoStore.state.todoList = [...todoStore.state.todoList, newTodo];
+    const newList = [...todoStore.state.todoList, newTodo];
+    todoStore.state.todoList = newList;
+    if (todoStore.state.sortType === "inputOrder") {
+      const todos = todoStore.state.sortInputOrderFn({ ...todoStore.state, todoList: newList });
+      setTimeout(() => {
+        todoStore.state.todoList = [...todos];
+      }, 0);
+    } else if (todoStore.state.sortType === "remainingTimeOrder") {
+      const todos = todoStore.state.sortRemainingTimeOrderFn({ ...todoStore.state, todoList: newList });
+      setTimeout(() => {
+        todoStore.state.todoList = [...todos];
+      }, 0);
+    }
     this.todoInput._instance.inputEl.value = "";
     this.endTodoInput._instance.inputEl.value = "";
   }
