@@ -29,6 +29,14 @@ class TodoList extends Component {
     const closeItem = todoStore.state.todoList.filter((todo) => todo.id === id);
     todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
     todoStore.state.todoCloseList = [...todoStore.state.todoCloseList, ...closeItem];
+  }
+
+  timeCloseFn(id) {
+    console.log("timeCloseFn", id);
+
+    const closeItem = todoStore.state.todoList.filter((todo) => todo.id === id);
+    todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
+    todoStore.state.todoCloseList = [...todoStore.state.todoCloseList, ...closeItem];
     if (!closeItem) return;
 
     const popupId = popupStore.state.showPopup({
@@ -37,7 +45,6 @@ class TodoList extends Component {
         {
           label: "확인",
           onClick: () => {
-            // 삭제 로직
             popupStore.state.closePopup(popupId);
           },
         },
@@ -55,6 +62,7 @@ class TodoList extends Component {
         className: "todo-item",
         closeBtnOnClick: this.closeBtnOnClick,
         checkBtnOnClick: this.checkBtnOnClick,
+        timeCloseFn: this.timeCloseFn,
       })
     );
 

@@ -12,7 +12,7 @@ class TodoItem extends Component {
   }
 
   render() {
-    const { className = "", id, title, time, closeBtnOnClick, isChecked, checkBtnOnClick } = this.props;
+    const { className = "", id, title, time, closeBtnOnClick, isChecked, checkBtnOnClick, timeCloseFn } = this.props;
 
     console.log("TodoItem", this.props);
 
@@ -30,7 +30,7 @@ class TodoItem extends Component {
       time: Number(time),
       onComplete: () => {
         console.log("onComplete???");
-        closeBtnOnClick?.(id);
+        timeCloseFn?.(id);
       },
       onFinalSoon: () => {
         console.log("onFinalSoon???");
