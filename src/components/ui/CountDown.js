@@ -16,7 +16,7 @@ class CountDown extends Component {
     this.interval = setInterval(() => {
       this.time--;
 
-      if (this.time <= 5) {
+      if (this.time === 5) {
         if (typeof this.onFinalSoon === "function") {
           this.onFinalSoon();
         }
