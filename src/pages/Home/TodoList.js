@@ -19,6 +19,12 @@ class TodoList extends Component {
     this.oldVNode = null; // 이전 VDOM 저장용
   }
 
+  checkBtnOnClick(id, checked) {
+    console.log("checkBtnOnClick", id, checked);
+    const newTodos = todoStore.state.todoList.map((todo) => (todo.id === id ? { ...todo, isChecked: checked } : todo));
+    todoStore.state.todoList = newTodos;
+  }
+
   closeBtnOnClick(id) {
     console.log("closeBtnOnClick", id);
     todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
@@ -32,8 +38,10 @@ class TodoList extends Component {
       v(TodoItem, {
         ...todo,
         key: todo.id,
+        isChecked: todo.isChecked ?? false,
         className: "todo-item",
         closeBtnOnClick: this.closeBtnOnClick,
+        checkBtnOnClick: this.checkBtnOnClick,
       })
     );
 

@@ -35,7 +35,7 @@ export class TodoInput extends Component {
       return;
     }
 
-    const newTodo = { id: shortId(), title: content, time, regDate: Date.now() };
+    const newTodo = { id: shortId(), title: content, time, regDate: Date.now(), isChecked: false };
     const newList = [...todoStore.state.todoList, newTodo];
     todoStore.state.todoList = newList;
     if (todoStore.state.sortType === "inputOrder") {

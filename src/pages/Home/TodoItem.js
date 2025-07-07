@@ -1,5 +1,6 @@
 import { Component } from "@components/core/Component";
 import Button from "@components/ui/Button";
+import Check from "@components/ui/Check";
 import Text from "@components/ui/Text";
 import CountDown from "@components/ui/CountDown";
 import { v, renderDom } from "@components/core/vdom";
@@ -11,9 +12,18 @@ class TodoItem extends Component {
   }
 
   render() {
-    const { className = "", id, title, time, closeBtnOnClick } = this.props;
+    const { className = "", id, title, time, closeBtnOnClick, isChecked, checkBtnOnClick } = this.props;
 
     console.log("TodoItem", this.props);
+
+    const checkBtn = v(Check, {
+      checked: isChecked,
+      onChange: (checked) => {
+        console.log("체크 상태:", checked);
+        checkBtnOnClick?.(id, checked);
+      },
+    });
+
     const text = v(Text, { text: title });
     // const timer = new Text({ text: `${time}초` });
     this.countDown = v(CountDown, {
@@ -38,6 +48,7 @@ class TodoItem extends Component {
     });
 
     this.el.className = className;
+    this.el.appendChild(renderDom(checkBtn));
     this.el.appendChild(renderDom(text));
     this.el.appendChild(renderDom(this.countDown));
     this.el.appendChild(renderDom(closeBtn));

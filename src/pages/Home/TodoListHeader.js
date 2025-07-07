@@ -31,11 +31,19 @@ class TodoListHeader extends Component {
     todoStore.state.todoList = [...todos];
   }
 
-  closeBtnOnClick(id) {
-    console.log("closeBtnOnClick", id);
-    todoStore.state.todoList = todoStore.state.todoList.filter((todo) => todo.id !== id);
+  allCloseBtnOnClick() {
+    console.log("allCloseBtnOnClick");
+    todoStore.state.todoList = [];
+  }
 
-    console.log("result", todoStore.state.todoList);
+  selectCloseBtnOnClick() {
+    console.log(
+      "selectCloseBtnOnClick",
+      todoStore.state.todoList.filter((todo) => todo.isChecked)
+    );
+    todoStore.state.todoList = todoStore.state.todoList.filter((todo) => !todo.isChecked);
+
+    // console.log("result", todoStore.state.todoList);
   }
 
   renderBtn(sortView) {
@@ -79,8 +87,8 @@ class TodoListHeader extends Component {
     sortView.className = "sort-view";
     closeView.className = "close-view";
 
-    const allCloseBtn = v(Button, { label: "전체 종료", className: "close-btn", onClick: () => {} });
-    const closeBtn = v(Button, { label: "선택 종료", className: "close-btn", onClick: () => {} });
+    const allCloseBtn = v(Button, { label: "전체 종료", className: "close-btn", onClick: this.allCloseBtnOnClick });
+    const closeBtn = v(Button, { label: "선택 종료", className: "close-btn", onClick: this.selectCloseBtnOnClick });
 
     closeView.appendChild(renderDom(allCloseBtn));
     closeView.appendChild(renderDom(closeBtn));
