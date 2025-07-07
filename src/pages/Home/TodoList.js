@@ -18,25 +18,25 @@ class TodoList extends Component {
 
   sortInputOrderOnClick() {
     console.log("sortInputOrderOnClick", todoStore.state.todoList);
+
+    const todos = [...todoStore.state.todoList];
+    todos.sort((a, b) => a.regDate - b.regDate);
+
+    console.log("입력한순", todos);
+    todoStore.state.todoList = [...todos];
   }
 
   sortRemainingTimeOrderOnClick() {
     console.log("sortRemainingTimeOrderOnClick", todoStore.state.todoList);
 
     const todos = [...todoStore.state.todoList];
-    console.log("이전 todos", todos);
     const now = Date.now();
     todos.sort((a, b) => {
       const remainA = Math.max(0, Number(a.time * 1000) - (now - a.regDate));
       const remainB = Math.max(0, Number(b.time * 1000) - (now - b.regDate));
-      console.log("Number(a.time)", Number(a.time));
-      console.log("(now - a.regDate)", now - a.regDate);
-      console.log("remainA", remainA);
-      console.log("remainB", remainB);
       return remainA - remainB;
     });
 
-    console.log("다음 todos", todos);
     todoStore.state.todoList = [...todos];
   }
 
