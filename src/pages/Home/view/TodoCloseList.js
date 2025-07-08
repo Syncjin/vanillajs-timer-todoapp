@@ -82,7 +82,7 @@ class TodoCloseList extends Component {
 
     this.el.appendChild(renderDom(text));
 
-    this.listView.className = "todo-list-view";
+    this.listView.className = "todo-close-list-view";
 
     this.el.appendChild(this.listView);
 

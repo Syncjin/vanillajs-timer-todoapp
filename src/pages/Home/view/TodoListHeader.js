@@ -45,10 +45,13 @@ class TodoListHeader extends Component {
       todoStore.state.todoList.filter((todo) => todo.isChecked)
     );
 
-    const checkList = todoStore.state.todoList.filter((todo) => !todo.isChecked);
-    const unCheckList = todoStore.state.todoList.filter((todo) => todo.isChecked);
-    todoStore.state.todoList = checkList;
-    todoStore.state.todoCloseList = unCheckList;
+    const unCheckList = todoStore.state.todoList.filter((todo) => !todo.isChecked);
+
+    const checkList = todoStore.state.todoList.filter((todo) => todo.isChecked);
+    console.log("체크 아닌 목록", unCheckList);
+    console.log("체크 목록", checkList);
+    todoStore.state.todoList = unCheckList;
+    todoStore.state.todoCloseList = [...todoStore.state.todoCloseList, ...checkList];
   }
 
   renderBtn() {

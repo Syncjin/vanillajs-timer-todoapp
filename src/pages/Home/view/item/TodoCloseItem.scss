@@ -1,0 +1,23 @@
+.todo-close-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap:16px;
+  word-break: break-word;       
+  overflow-wrap: break-word;
+  padding:12px 16px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 160%;
+
+  
+  
+  .reset-btn {
+    border:0;
+    padding:6px 12px;
+    border-radius: 4px;
+    background: #eeeeee;
+    cursor: pointer;
+  }
+
+}

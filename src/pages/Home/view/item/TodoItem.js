@@ -44,6 +44,7 @@ class TodoItem extends Component {
     if (!this.el.hasChildNodes()) {
       const checkBtn = v(Check, {
         checked: isChecked,
+        className: "check-btn",
         onChange: (checked) => {
           console.log("체크 상태:", checked);
           checkBtnOnClick?.(id, checked);
@@ -51,9 +52,12 @@ class TodoItem extends Component {
       });
 
       this.textWrapper = document.createElement("div");
+      this.textWrapper.className = "text-wrapper";
       this.renderTextWrapper(title);
 
       this.countDownContainer = document.createElement("div");
+      const btnArea = document.createElement("div");
+      btnArea.className = "btn-area";
 
       this.editBtn = v(Button, {
         label: this.state.isEdit ? "수정완료" : "수정",
@@ -89,8 +93,9 @@ class TodoItem extends Component {
       this.el.appendChild(renderDom(checkBtn));
       this.el.appendChild(this.textWrapper);
       this.el.appendChild(this.countDownContainer);
-      this.el.appendChild(renderDom(this.editBtn));
-      this.el.appendChild(renderDom(closeBtn));
+      btnArea.appendChild(renderDom(this.editBtn));
+      btnArea.appendChild(renderDom(closeBtn));
+      this.el.appendChild(btnArea);
     } else {
       this.renderTextWrapper(title);
       this.editBtn._instance?.update({

@@ -2,7 +2,7 @@ import { Component } from "@components/core/Component";
 import Button from "@components/ui/Button";
 import Text from "@components/ui/Text";
 import { v, renderDom } from "@components/core/vdom";
-import "./TodoItem.scss";
+import "./TodoCloseItem.scss";
 
 class TodoCloseItem extends Component {
   createElement() {

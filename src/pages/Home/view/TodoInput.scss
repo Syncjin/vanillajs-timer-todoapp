@@ -1,27 +1,28 @@
 .todo-input-inner {
-  border: 1px solid gray;
-  padding: 10px;
+  border: 1px solid #808080;
+  border-radius: 6px;
+  padding: 16px;
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  align-items: center;
+  gap: 12px;
   .input {
     display: flex;
     flex-direction: column;
     flex:1;
-    gap: 5px;
-    
+    gap: 6px;
     input {
-      // width: 100%;
       padding: 8px 5px;
     }
   }
   .add-btn {
-    background-color: skyblue;
+    background-color: #ffe04b;
     border: none;
     width: 80px;
-    height: 52px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'MyFont';
     cursor: pointer;
+    border-radius: 4px;
   }
 }
 

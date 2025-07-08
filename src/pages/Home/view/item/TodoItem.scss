@@ -1,12 +1,68 @@
 .todo-item {
-  border: 1px solid gray;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 24px 1fr auto auto;
+  align-items: center;
+  gap:16px;
   word-break: break-word;       
   overflow-wrap: break-word;
-  gap: 50px;
+  padding:12px 16px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 160%;
   &.active {
-    background-color: orange;
+    background-color: #ffb0b0;
+  }
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-wrapper {
+    span {
+      flex:1;
+      text-align: left;
+    }
+    .input {
+      flex: 1;
+      display: flex;
+      input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  .check-btn {
+    width:20px;
+    height:20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:0;
+    border:1px solid #808080;
+    border-radius: 4px;
+    background: none;
+    img{
+      width:12px;
+      height:12px;
+    }
+  }
+  .btn-area {
+    display: flex;
+    align-items: center;
+    gap:6px;
+    button {
+      cursor: pointer;
+      border:0;
+      padding:6px 12px;
+      border-radius: 4px;
+    }
+    .edit-btn {
+      background: #eeeeee;
+    }
+    .close-btn {
+      background: #ffd7d7;
+    }
   }
 }

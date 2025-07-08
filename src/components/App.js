@@ -2,6 +2,7 @@ import { Component } from "./core/Component";
 import Router from "./core/Router.js";
 import Home from "@pages/Home/index.js";
 import PopupContainer from "@components/ui/popup/PopupContainer";
+import "@styles/style.scss";
 class App extends Component {
   createElement() {
     const el = document.createElement("main");
