@@ -1,4 +1,5 @@
 import { Component } from "@components/core/Component";
+import { commaFormat } from "@utils/format";
 
 class CountDown extends Component {
   createElement() {
@@ -7,7 +8,7 @@ class CountDown extends Component {
 
   render() {
     this.time = this.props.time ?? 0; // 초기 시간 (초)
-    this.el.textContent = `${this.time}초`;
+    this.el.textContent = `${commaFormat(this.time)}초`;
     this.onComplete = this.props.onComplete;
     this.onFinalSoon = this.props.onFinalSoon;
     this.isPaused = false;
@@ -34,7 +35,7 @@ class CountDown extends Component {
         return;
       }
 
-      this.el.textContent = `${this.time}초`;
+      this.el.textContent = `${commaFormat(this.time)}초`;
     }, 1000);
   }
 

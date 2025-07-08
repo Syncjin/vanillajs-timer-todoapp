@@ -3,6 +3,7 @@ import Button from "@components/ui/Button";
 import Text from "@components/ui/Text";
 import { v, renderDom } from "@components/core/vdom";
 import "./TodoCloseItem.scss";
+import { commaFormat } from "@utils/format";
 
 class TodoCloseItem extends Component {
   createElement() {
@@ -16,7 +17,7 @@ class TodoCloseItem extends Component {
 
     const text = v(Text, { text: title });
 
-    const timeText = v(Text, { text: `${time}초` });
+    const timeText = v(Text, { text: `${commaFormat(time)}초` });
 
     const resetBtn = v(Button, {
       label: "복원",
