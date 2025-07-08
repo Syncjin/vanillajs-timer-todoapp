@@ -10,10 +10,12 @@ class CountDown extends Component {
     this.el.textContent = `${this.time}초`;
     this.onComplete = this.props.onComplete;
     this.onFinalSoon = this.props.onFinalSoon;
+    this.isPaused = false;
   }
 
-  componentDidMount() {
+  start() {
     this.interval = setInterval(() => {
+      if (this.isPaused) return;
       this.time--;
 
       if (this.time === 5) {
@@ -34,6 +36,18 @@ class CountDown extends Component {
 
       this.el.textContent = `${this.time}초`;
     }, 1000);
+  }
+
+  pause() {
+    this.isPaused = true;
+  }
+
+  resume() {
+    this.isPaused = false;
+  }
+
+  componentDidMount() {
+    this.start();
   }
 
   componentWillUnmount() {
