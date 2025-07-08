@@ -31,6 +31,26 @@ class TodoList extends Component {
     todoStore.state.todoCloseList = [...todoStore.state.todoCloseList, ...closeItem];
   }
 
+  editBtnOnClick(id, callback) {
+    console.log("editBtnOnClick", id, callback);
+    const editText = callback?.();
+    console.log("editText", editText);
+
+    if (!editText) return;
+
+    todoStore.state.todoList = todoStore.state.todoList.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          title: editText.text,
+        };
+      }
+      return todo;
+    });
+
+    console.log("todoStore.state.todoList", todoStore.state.todoList);
+  }
+
   timeCloseFn(id) {
     console.log("timeCloseFn", id);
 
@@ -61,6 +81,7 @@ class TodoList extends Component {
         isChecked: todo.isChecked ?? false,
         className: "todo-item",
         closeBtnOnClick: this.closeBtnOnClick,
+        editBtnOnClick: this.editBtnOnClick,
         checkBtnOnClick: this.checkBtnOnClick,
         timeCloseFn: this.timeCloseFn,
       })

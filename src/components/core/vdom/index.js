@@ -149,4 +149,16 @@ export function diff(parent, oldVNode, newVNode, index = 0) {
     }
     return;
   }
+
+  if (typeof newVNode.type === "function") {
+    const instance = oldVNode._instance;
+    if (instance) {
+      const prevProps = instance.props;
+      instance.props = newVNode.props;
+
+      if (JSON.stringify(prevProps) !== JSON.stringify(newVNode.props)) {
+        instance.render?.();
+      }
+    }
+  }
 }
