@@ -1,6 +1,6 @@
 
 
-.todo-list-view, .todo-close-list-view {
+.todo-list-view {
   height: 100%;
   width: 100%;
   border: 1px solid #808080;
@@ -10,12 +10,8 @@
     border-top:1px solid #e0e0e0;
   }
 
-  .todo-close-item + .todo-close-item {
-    border-top:1px solid #e0e0e0;
-  }
 }
 
 .todo-list-view {
   margin-top: 12px;
-
 }

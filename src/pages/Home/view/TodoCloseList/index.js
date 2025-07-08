@@ -1,6 +1,6 @@
 import { Component } from "@components/core/Component";
 import Text from "@components/ui/Text";
-import "./TodoList.scss";
+import "./TodoCloseList.scss";
 import todoStore from "@store/todoStore";
 import TodoCloseItem from "@pages/Home/view/item/TodoCloseItem";
 
