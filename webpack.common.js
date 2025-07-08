@@ -6,9 +6,6 @@ module.exports = {
     index: {
       import: "./src/index.js",
     },
-    print: {
-      import: "./src/print.js",
-    },
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "millie test",
   "private": true,
+  "sideEffects": [
+    "**/*.scss"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
-    "start": "webpack serve --open",
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
