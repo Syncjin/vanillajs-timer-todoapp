@@ -8,7 +8,6 @@ Vanilla JavaScript로 구현된 Todo 애플리케이션입니다.
 - [구현 요구사항](#구현-요구사항)
 - [프로젝트 구조](#프로젝트-구조)
 - [설치 및 실행](#설치-및-실행)
-- [빌드 및 배포](#빌드-및-배포)
 
 ## 프로젝트 개요
 
@@ -147,34 +146,13 @@ millie/
 
 ## 설치 및 실행
 
-### 1. 저장소 클론
-
-```bash
-git clone https://github.com/Syncjin/millie.git
-cd millie
-```
-
-### 2. 의존성 설치
+### 1. 의존성 설치
 
 ```bash
 npm install
 ```
 
-### 3. 개발 서버 실행
-
-```bash
-npm run dev
-```
-
-### 4. 프로덕션 빌드
-
-```bash
-npm run build
-```
-
-## 빌드 및 배포
-
-### 개발 환경
+### 2. 개발 서버 실행
 
 ```bash
 npm run dev
@@ -184,7 +162,7 @@ npm run dev
 - Source map 생성
 - 개발 서버 자동 실행
 
-### 프로덕션 빌드
+### 3. 프로덕션 빌드
 
 ```bash
 npm run build
@@ -195,6 +173,6 @@ npm run build
 - 파일명 해시 적용
 - 트리 쉐이킹
 
-## 📊 UML 다이어그램
+## UML 다이어그램
 
 프로젝트의 상세한 UML 다이어그램은 [millie-uml.md](./millie-uml.md) 파일에서 확인할 수 있습니다.
