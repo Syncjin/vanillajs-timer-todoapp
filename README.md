@@ -1,4 +1,4 @@
-# Millie - Timer To Do List
+# Timer To Do List
 
 Vanilla JavaScript로 구현된 Todo 애플리케이션입니다.
 
@@ -80,7 +80,7 @@ Webpack5를 사용하여 환경분리와 함께 개발환경을 구성하였습�
 ## 프로젝트 구조
 
 ```
-millie/
+vanillajs-timer-todoapp/
 ├── public/
 │   └── index.html              # HTML 템플릿
 ├── src/
@@ -132,7 +132,6 @@ millie/
 │   │   │   ├── Pretendard-Medium.woff
 │   │   │   └── Pretendard-Medium.woff2
 │   │   └── images/
-│   │       ├── millie.png
 │   │       └── check.svg
 │   ├── styles/
 │   │   └── style.scss          # 글로벌 스타일
@@ -175,4 +174,4 @@ npm run build
 
 ## UML 다이어그램
 
-프로젝트의 상세한 UML 다이어그램은 [millie-uml.md](./millie-uml.md) 파일에서 확인할 수 있습니다.
+프로젝트의 상세한 UML 다이어그램은 [project-uml.md](./project-uml.md) 파일에서 확인할 수 있습니다.
